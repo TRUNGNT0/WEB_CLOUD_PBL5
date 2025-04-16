@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/Style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">Nhà kính thông minh</a>
+            <div class="navbar-nav">
+                <a href="/" class="nav-link">Trang chủ</a>
+                {% comment %} <a href="{% url 'logout' %}" class="nav-link">Đăng xuất</a> {% endcomment %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Chào mừng, {{ request.user.username }}!</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <h2>Danh sách cây của bạn</h2>
+        {% if plants %}
+        <ul class="list-group">
+            {% for plant in plants %}
+            <li class="list-group-item">
+                {{ plant.name }} ({{ plant.species }})
+                <a href="{% url 'plant_dashboard' plant.id %}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Bạn chưa có cây nào. Hãy thêm cây để bắt đầu!</p>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nhà kính thông minh. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

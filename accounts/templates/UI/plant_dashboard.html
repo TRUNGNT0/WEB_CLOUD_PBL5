@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà kính thông minh</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/Style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">Nhà kính thông minh</a>
+            <div class="navbar-nav">
+                <a href="/" class="nav-link">Trang chủ</a>
+                {% comment %} <a href="{% url 'logout' %}" class="nav-link">Đăng xuất</a> {% endcomment %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 text-center">
+        <h1 class="mb-4">Dữ liệu cảm biến - {{ plant.name }}</h1>
+        <p>Chủ sở hữu: {{ plant.owner.username }}</p>
+        
+        {% if latest_status %}
+        <div class="card-grid">
+            <div class="card">
+                <h3>🌡️ Nhiệt độ</h3>
+                <p>{{ latest_status.temperature }}°C</p>
+            </div>
+            <div class="card">
+                <h3>💧 Độ ẩm</h3>
+                <p>{{ latest_status.humidity }}%</p>
+            </div>
+            <div class="card">
+                <h3>☀️ Ánh sáng</h3>
+                <p>{{ latest_status.light }} lux</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h3>Trạng thái cây: 
+                {% if latest_status.condition == 'GOOD' %}
+                    <span class="badge badge-success">{{ latest_status.get_condition_display }}</span>
+                {% elif latest_status.condition == 'SICK' %}
+                    <span class="badge badge-warning">{{ latest_status.get_condition_display }}</span>
+                {% else %}
+                    <span class="badge badge-danger">{{ latest_status.get_condition_display }}</span>
+                {% endif %}
+            </h3>
+            <p>Cập nhật lúc: {{ latest_status.timestamp }}</p>
+        </div>
+        {% else %}
+        <p>Chưa có dữ liệu trạng thái cho cây này.</p>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{% url 'plant_history' plant.id %}" class="btn btn-primary">Xem lịch sử trước đó</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nhà kính thông minh. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

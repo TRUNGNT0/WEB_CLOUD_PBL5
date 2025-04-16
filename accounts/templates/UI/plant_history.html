@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử trạng thái</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/Style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">Nhà kính thông minh</a>
+            <div class="navbar-nav">
+                <a href="/" class="nav-link">Trang chủ</a>
+                {% comment %} <a href="{% url 'logout' %}" class="nav-link">Đăng xuất</a> {% endcomment %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">Lịch sử trạng thái</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Thời gian</th>
+                    <th>Nhiệt độ (°C)</th>
+                    <th>Độ ẩm (%)</th>
+                    <th>Ánh sáng (lux)</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status in statuses %}
+                <tr>
+                    <td>{{ status.timestamp }}</td>
+                    <td>{{ status.temperature }}</td>
+                    <td>{{ status.humidity }}</td>
+                    <td>{{ status.light }}</td>
+                    <td>
+                        {% if status.condition == 'GOOD' %}
+                            <span class="badge badge-success">{{ status.get_condition_display }}</span>
+                        {% elif status.condition == 'SICK' %}
+                            <span class="badge badge-warning">{{ status.get_condition_display }}</span>
+                        {% else %}
+                            <span class="badge badge-danger">{{ status.get_condition_display }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Chưa có dữ liệu lịch sử.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'plant_dashboard' plant.id %}" class="btn btn-primary">Quay lại</a>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nhà kính thông minh. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
