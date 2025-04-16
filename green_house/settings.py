@@ -116,7 +116,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Để Render phục vụ file tĩnh
+STATIC_ROOT = BASE_DIR / 'static'  # Để Render phục vụ file tĩnh
 STATICFILES_DIRS = [BASE_DIR / 'accounts/static']
 
 # Default primary key field type
