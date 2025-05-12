@@ -75,12 +75,11 @@ WSGI_APPLICATION = 'green_house.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-database_url='postgresql://greenhouse_db_xix2_user:dMcyG7Zhfj0uxr6wcqTay3Fh8rEo2NOR@dpg-cvp8bgqdbo4c73bca8fg-a.oregon-postgres.render.com/greenhouse_db_xix2'
 DATABASES = {
-    'default': dj_database_url.config(
-        default=database_url,
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 

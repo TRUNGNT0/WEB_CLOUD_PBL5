@@ -40,6 +40,17 @@ class PlantStatus(models.Model):
     ]
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='GOOD')
     
+    # Các hoạt động đã thực hiện
+    ACTION_CHOICES = [
+        ('WATER', 'Tưới nước'),
+        ('FAN', 'Bật quạt'),
+        ('LIGHT', 'Bật đèn'),
+        ('FERTILIZE', 'Bón phân'),
+        ('PRUNE', 'Tỉa cây'),
+        ('NONE', 'Không có'),
+    ]
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES, default='NONE')
+    
     # Thời gian ghi nhận
     timestamp = models.DateTimeField(auto_now_add=True)  # Tự động lưu thời gian khi tạo
 
